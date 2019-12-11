@@ -86,7 +86,7 @@ function registrar_usuario() {
 	$val2 = $_POST['registro_pass1'];
 	$val2_hash= hash('sha256', $val2);
 	$val3 = $_POST['registro_nom_usuario'];
-	$val4 = $_POST['registro_estado'];
+	$val4 = $_POST['estado_usuario'];
 	
 	$sentencia->execute();
 	$sentencia->store_result();
@@ -159,9 +159,85 @@ function guardar_mensaje() {
 *	SQL: UPDATE into usuario ...
 */
 function editar_perfil() {
+	$nuevo_estado=$_POST['estado_usuario'];
+	$nuevo_nombre=$_POST['nombre'];
+	recibir_fichero();
+
+	if(!$estado_usuario=""){
+		editar_estado($nuevo_estado);
+	}else{
+		//Estado no introducido (se omite)
+	}
+
+	if(!$nuevo_nombre=""){
+		editar_nombre();
+	}else{
+		//Nombre no introducido (se omite)
+	}
+
+	//Guardar el archivo
 	return true;
 }
 
+
+
+function editar_estado($nuevo_estado){
+
+	$mysqli = connection();
+
+	if (mysqli_connect_errno()) {
+		printf("Falló la conexión: %s\n", mysqli_connect_error());
+		exit();
+	}
+	$consulta = "UPDATE usuario SET estado = ? WHERE num_tel = ?";
+	$sentencia = $mysqli->prepare($consulta);
+
+	$sentencia->bind_param("ss", $val1, $val2);
+
+	$val1 = $nuevo_estado;
+	$val2 = $_SESSION['user'];
+
+	$sentencia->execute();
+}
+
+function editar_nombre(){
+	$nuevo_nombre=$_POST['nombre'];
+
+	$mysqli = connection();
+
+	if (mysqli_connect_errno()) {
+		printf("Falló la conexión: %s\n", mysqli_connect_error());
+		exit();
+	}
+	$consulta = "UPDATE usuario SET nombre_usuario = ? WHERE num_tel = ?";
+	$sentencia = $mysqli->prepare($consulta);
+
+	$sentencia->bind_param("ss", $val1, $val2);
+
+	$val1 = $nuevo_nombre;
+	$val2 = $_SESSION['user'];
+
+	$sentencia->execute();
+}
+
+/*
+*	Muestra el estado del usuario logeado
+*	E:
+*	S: String
+*	SQL: UPDATE into usuario ...
+*/
+function recibir_fichero(){
+	$usuario = $_SESSION['user'];
+
+	$dir_subida = 'usuarios/'.$usuario;
+	$fichero_subido = $dir_subida . '/perfil.png';
+
+	if (move_uploaded_file($_FILES['imagen_perfil']['tmp_name'], $fichero_subido)) {
+		//La imagen se ha subido y se ha movido correctamente
+	} else {
+		//Archivo no introducido (se omite)
+	}
+}
 /*
 *	Muestra el estado del usuario logeado
 *	E:
@@ -215,7 +291,12 @@ $mysqli->close();
 *	SQL: 
 */
 function maximo_caracteres_estado() {
-	if(strlen($_POST['estado_usuario'])>=$LONG_ESTADO){
+	include 'config.php';
+	
+	$estado=$_POST['estado_usuario'];
+
+
+	if(strlen($estado)<=$LONG_ESTADO){
 		return true;
 	}
 	return false;

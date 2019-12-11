@@ -246,19 +246,20 @@ function show_contacto_chat() {
 *	SQL:
 */
 function show_perfil() {
+	include 'config.php';
 	echo '
 
 		<section id="perfil">
 
-	<form id="vb" action="index.php" method="post" role="form">
+	<form id="vb" action="index.php" method="post" role="form" enctype="multipart/form-data">
 
-	  <input id="nombre" type="text" name="nombre" placeholder="escoge un nombre de usuario" required="" ><br><br>
+	  <input id="nombre" type="text" name="nombre" placeholder="Cambia tu nombre de usuario" ><br><br>
 		
-			  <span>
-			Cambiar imagen de perfil<input type="file" name="b1" multiple>
-	  </span><br><br>
+		<span>
+			Cambia tu imagen de perfil<input type="file" name="imagen_perfil" multiple>
+		</span><br><br>
 
-	  <textarea id="ta" rows="5" cols="40" required="" name="estado_usuario">I am working</textarea><br><br>
+	  <textarea id="ta" rows="5" cols="40" name="estado_usuario" placeholder="Cambia tu estado (opcional) MAX-'.$LONG_ESTADO.'" caracteres></textarea><br><br>
 	   
 	  <button type="submit" name="editar" >Editar</button>
 

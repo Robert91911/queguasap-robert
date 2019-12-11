@@ -4,6 +4,8 @@ ini_set('display_errors', '1');
 
 session_start();
 
+include_once 'config.php';
+
 include_once 'model/bd.inc.php';
 
 include_once 'view/header.inc.php';
@@ -13,7 +15,6 @@ include_once 'controller/controller.inc.php';
 
 include_once 'view/show_view.php';
 
-include_once 'config.php';
 
 actualizar_sesion();
 

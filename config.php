@@ -2,7 +2,7 @@
 //Define la longitud del texto de cada mensaje
 $LONG_TEXTO=20;
 //Define la longitud máxima de un estado
-$LONG_ESTADO=20;
+$LONG_ESTADO=50;
 //Define el tamaño máximo de una imagen
 $TAM_IMAGEN=10;
 //Define el tamaño máximo de un archivo adjunto
