@@ -53,6 +53,7 @@ function show_content() {
 				}
 			else {
 				show_msg("Fallo en autentificación");
+				show_loging();
 			}
 			
 		}

@@ -9,5 +9,9 @@ $TAM_IMAGEN=10;
 $TAM_ARCHIVO=20;
 //Define el estado predeterminado si el usuario no elige uno al registrarse;
 $ESTADO_PREDETERMINADO="Hola, soy un nuevo usuario";
-
+////////////////////BASE DE DATOS////////////////////////////////
+$BD_DIRECCION = 'localhost';
+$BD_USUARIO = 'queguasap';
+$BD_PASS = 'QueGuaSap';
+$BD_NOMBRE = 'queguasap';
 ?>

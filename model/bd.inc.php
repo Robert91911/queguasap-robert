@@ -9,14 +9,11 @@
 */
 
 function connection() {
+	include 'config.php';
 		try{
-		$DATABASE_HOST = 'localhost';
-		$DATABASE_USER = 'queguasap';
-		$DATABASE_PASS = 'QueGuaSap';
-		$DATABASE_NAME = 'queguasap';
-			
+		
 		// Crear la conexión
-		$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+		$con = mysqli_connect($BD_DIRECCION, $BD_USUARIO, $BD_PASS, $BD_NOMBRE);
 	
 		//Devuelve una variable tipo conexión
 		return $con;
@@ -90,14 +87,10 @@ function registrar_usuario() {
 	
 	$sentencia->execute();
 	$sentencia->store_result();
-	$count = $sentencia->num_rows;
 
-	if($count == 1) {
+	mkdir('usuarios/'.$val1.'');
+
 		return true;
-	}
-	else {
-		return false;
-	}
 }
 /*
 *	Comprueba login
@@ -159,30 +152,27 @@ function guardar_mensaje() {
 *	SQL: UPDATE into usuario ...
 */
 function editar_perfil() {
-	$nuevo_estado=$_POST['estado_usuario'];
-	$nuevo_nombre=$_POST['nombre'];
-	recibir_fichero();
+	//Comprueba que los campos tien cosas, si las tiene las actualiza y si no las omite.
 
-	if(!$estado_usuario=""){
-		editar_estado($nuevo_estado);
-	}else{
-		//Estado no introducido (se omite)
-	}
-
-	if(!$nuevo_nombre=""){
+	if(!empty($_FILES['imagen_perfil']['tmp_name'])) 
+		recibir_fichero();
+	
+	if(!empty($_POST['estado_usuario']))
+		editar_estado();
+	
+	if(!empty($_POST['nombre']))
 		editar_nombre();
-	}else{
-		//Nombre no introducido (se omite)
-	}
 
-	//Guardar el archivo
 	return true;
 }
 
 
 
-function editar_estado($nuevo_estado){
+function editar_estado(){
+	//Establecemos es nuevo estado
+	$nuevo_estado=$_POST['estado_usuario'];
 
+	//Conexion a la base de datos
 	$mysqli = connection();
 
 	if (mysqli_connect_errno()) {
@@ -232,10 +222,10 @@ function recibir_fichero(){
 	$dir_subida = 'usuarios/'.$usuario;
 	$fichero_subido = $dir_subida . '/perfil.png';
 
-	if (move_uploaded_file($_FILES['imagen_perfil']['tmp_name'], $fichero_subido)) {
-		//La imagen se ha subido y se ha movido correctamente
-	} else {
-		//Archivo no introducido (se omite)
+	if(exif_imagetype($_FILES['imagen_perfil']['tmp_name']) != IMAGETYPE_PNG) {
+		show_msg("El archivo no es el adecuado");
+	}else if (move_uploaded_file($_FILES['imagen_perfil']['tmp_name'], $fichero_subido)){
+		//El archivo se ha movido correctame
 	}
 }
 /*

@@ -93,9 +93,9 @@ function show_registro(){
 
 					<input id="numRegistro" type="text" name="numero" placeholder="número de telefono" required="" ><br><br>
    
-					<input id="passRegistro" type="passRegistro" name="registro_pass1" placeholder="contraseña" required="" ><br><br>
+					<input id="passRegistro" type="password" name="registro_pass1" placeholder="contraseña" required="" ><br><br>
 
-					<input id="passRegistro" type="passRegistro" name="registro_pass2" placeholder="repetir contraseña" required="" ><br><br>
+					<input id="passRegistro" type="password" name="registro_pass2" placeholder="repetir contraseña" required="" ><br><br>
 
 					<input id="nomUsuarioRegistro" type="nomUsuarioRegistro" name="registro_nom_usuario" placeholder="nombre de usuario (opcional)"><br><br>
 
@@ -256,7 +256,7 @@ function show_perfil() {
 	  <input id="nombre" type="text" name="nombre" placeholder="Cambia tu nombre de usuario" ><br><br>
 		
 		<span>
-			Cambia tu imagen de perfil<input type="file" name="imagen_perfil" multiple>
+			Cambia tu imagen de perfil (solo formato PNG)<input type="file" name="imagen_perfil" multiple>
 		</span><br><br>
 
 	  <textarea id="ta" rows="5" cols="40" name="estado_usuario" placeholder="Cambia tu estado (opcional) MAX-'.$LONG_ESTADO.'" caracteres></textarea><br><br>
